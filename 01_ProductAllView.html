@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品一覧ページ</title>
+</head>
+<body>
+    <h1>商品一覧</h1>
+
+    <!--絞り込み条件-->
+    <label>
+        <input type="checkbox" id="saleCheckbox">セール対象
+    </label>
+    <label>
+        <input type="checkbox" id="freeShippingCheckbox">送料無料
+    </label>
+    <!--並び替え-->
+    <select id="sortSelect">
+        <option value="standard">標準</option>
+        <option value="priceLowToHight">価格が安い順</option>
+    </select>
+    <!--商品一覧表示エリア-->
+    <table id="productList">
+        <tbody>
+            <!--ここに商品情報を動的に追加-->
+        </tbody>
+    </table>
+    <script src="01_ProductAllView.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スケジュールアプリ</title>
+</head>
+<style>
+    html{
+        width: 100%;
+    }
+    span{
+        color:red;
+        font-weight:bold;
+    }
+    td{
+        border:solid 1px;
+        background:gainsboro;
+    }
+    th{
+        background-color: whitesmoke;
+    }
+    table{
+        margin-bottom:30px;
+    }
+</style>
+<body>
+    <h1>スケジュールアプリ</h1>
+    <table>
+        <tr>
+            <th><strong>●使用方法●</strong></th>
+        </tr>
+        <td>
+            <p>①タスク内容に情報（やること）を入力します。</p>
+            <p>②任意の締切日をカレンダーから選択します。</p>
+            <p>③タスクの内容や詳細（メモ）を入力します（※任意）</p>
+            <p>④「スケジュールに追加」をクリックすると、<br>一覧にタスクと削除ボタンが生成されます。</p>
+            <p>⑤タスクが完了したら、「削除ボタン」をクリックしてください。<br>タスク情報が削除された後、メッセージが表示されます。</p>
+        </td>
+    </table>
+
+    <!-- スケジュール入力フォーム -->
+    <strong>
+        <span>*</span>は入力必須項目です。
+    </strong>
+    <form id="scheduleForm">
+        <label for="title">タスク内容<span>*</span>:</label>
+        <input type="text" id="title" required><br>
+
+        <label for="date">締め切り日<span>*</span>:</label>
+        <input type="date" id="date" required><br>
+
+        <label for="description">詳細:</label>
+        <input type="text" id="description"><br>
+
+        <button type="submit" id="add-button">スケジュールに追加</button>
+    </form>
+
+    <!-- スケジュール一覧 -->
+    <h2>スケジュール一覧</h2>
+    <ul id="scheduleList"></ul>
+    <div id="completionMessage"></div>
+
+    <script src="02_task.js"></script>
+</body>
+</html>
