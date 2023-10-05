@@ -1,15 +1,19 @@
-// ユーザー情報の配列
+// ユーザー情報の配列を生成（最大人数がユーザー数と同じ）
+var minUsers = 400; // 最低でも400人
+var numUsers = Math.floor(Math.random() * (999 - minUsers)) + minUsers;
 var users = [];
-// ユーザー情報を生成して配列に追加
-for (var i = 1; i <= 400; i++) {
-    var userName = "\u30E6\u30FC\u30B6\u30FC".concat(i);
-    users.push(userName);
+for (var i = 1; i <= numUsers; i++) {
+    users.push("\u30E6\u30FC\u30B6\u30FC".concat(i));
 }
-// 一度に表示するユーザー数（10人固定）
-var usersPerDisplay = 10;
+// チーム数計算
+var maxUsersPerTeam = 10; // 1チームあたりの人数を10人に固定
+var numTeams = Math.ceil(numUsers / maxUsersPerTeam);
+console.log('全社員数：' + numUsers);
+console.log('チーム数：' + numTeams);
+console.log('1チームの最大人数：' + maxUsersPerTeam);
 // 一個前と前々回に表示したユーザーリストを保持する変数
-var prevUsers = []; //一個前に表示したパターンを格納する配列
-var prevPrevUsers = []; //二個前に表示したパターンを格納する配列
+var prevUsers = [];
+var prevPrevUsers = [];
 // ボタン要素を取得
 var button = document.getElementById("generateButton");
 // ユーザーリスト要素を取得
@@ -18,35 +22,23 @@ var userList = document.getElementById("userList");
 button.addEventListener("click", function () {
     // ユーザー名をシャッフル
     var shuffledUsers = shuffleArray(users);
-    // 前回と前々回と異なるパターンのユーザーを取得
-    var startIndex = getRandomIndex(users.length);
-    var selectedUsers = [];
-    for (var i = 0; i < usersPerDisplay; i++) {
-        var index = (startIndex + i) % users.length;
-        var userName = shuffledUsers[index];
-        if (!prevUsers.includes(userName) && !prevPrevUsers.includes(userName)) {
-            selectedUsers.push(userName);
-        }
+    // チームごとにユーザーリストを生成
+    var teams = [];
+    for (var i = 0; i < shuffledUsers.length; i += maxUsersPerTeam) {
+        var team = shuffledUsers.slice(i, i + maxUsersPerTeam);
+        teams.push(team);
     }
-    //セレクトされたユーザー数が10人かチェック → もし10人未満・以上である場合は、処理を終わる（何も出力しない）
-    if (selectedUsers.length != usersPerDisplay) {
-        // selectedUsers.lengthが10になるようにデータを追加
-        while (selectedUsers.length < usersPerDisplay) {
-            var remainingUsers = shuffledUsers.filter(function (userName) { return !selectedUsers.includes(userName); });
-            selectedUsers.push(remainingUsers[0]);
-        }
-    }
-    // ユーザーリストをクリア
-    userList.innerHTML = "";
-    // ユーザー名を表示
-    selectedUsers.forEach(function (userName) {
-        var listItem = document.createElement("li");
-        listItem.textContent = userName;
-        userList.appendChild(listItem);
-    });
     // 前回と前々回に表示したユーザーリストを更新
     prevPrevUsers = prevUsers;
-    prevUsers = selectedUsers;
+    prevUsers = teams.flat();
+    // ユーザーリストをクリア
+    userList.innerHTML = "";
+    // チームごとにユーザー名と人数を表示
+    teams.forEach(function (team, index) {
+        var teamListItem = document.createElement("li");
+        teamListItem.textContent = "\u30C1\u30FC\u30E0No: ".concat(index + 1, ": ").concat(team.join(", "), " (\u5408\u8A08\u4EBA\u6570: ").concat(team.length, "\u4EBA)");
+        userList.appendChild(teamListItem);
+    });
 });
 // 配列をシャッフルする関数
 function shuffleArray(array) {
@@ -57,8 +49,4 @@ function shuffleArray(array) {
         _a = [shuffled[j], shuffled[i]], shuffled[i] = _a[0], shuffled[j] = _a[1];
     }
     return shuffled;
-}
-// ランダムなインデックスを取得する関数
-function getRandomIndex(max) {
-    return Math.floor(Math.random() * max);
 }
