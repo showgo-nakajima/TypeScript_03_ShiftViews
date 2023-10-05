@@ -1,3 +1,12 @@
+// ボタン要素を取得
+const button = document.getElementById("generateButton") as HTMLButtonElement;
+
+// ユーザーリスト要素を取得
+const userList = document.getElementById("userList") as HTMLUListElement;
+
+// ボタンクリック時の処理
+button.addEventListener("click", () => {
+console.clear(); // コンソールの内容を非表示にする
 // ユーザー情報の配列を生成（最大人数がユーザー数と同じ）
 const minUsers = 400; // 最低でも400人
 const numUsers = Math.floor(Math.random() * (999 - minUsers)) + minUsers;
@@ -18,14 +27,7 @@ console.log('1チームの最大人数：' + maxUsersPerTeam);
 let prevUsers: string[] = [];
 let prevPrevUsers: string[] = [];
 
-// ボタン要素を取得
-const button = document.getElementById("generateButton") as HTMLButtonElement;
 
-// ユーザーリスト要素を取得
-const userList = document.getElementById("userList") as HTMLUListElement;
-
-// ボタンクリック時の処理
-button.addEventListener("click", () => {
   // ユーザー名をシャッフル
   const shuffledUsers = shuffleArray(users);
 

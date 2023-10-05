@@ -1,25 +1,26 @@
-// ユーザー情報の配列を生成（最大人数がユーザー数と同じ）
-var minUsers = 400; // 最低でも400人
-var numUsers = Math.floor(Math.random() * (999 - minUsers)) + minUsers;
-var users = [];
-for (var i = 1; i <= numUsers; i++) {
-    users.push("\u30E6\u30FC\u30B6\u30FC".concat(i));
-}
-// チーム数計算
-var maxUsersPerTeam = 10; // 1チームあたりの人数を10人に固定
-var numTeams = Math.ceil(numUsers / maxUsersPerTeam);
-console.log('全社員数：' + numUsers);
-console.log('チーム数：' + numTeams);
-console.log('1チームの最大人数：' + maxUsersPerTeam);
-// 一個前と前々回に表示したユーザーリストを保持する変数
-var prevUsers = [];
-var prevPrevUsers = [];
 // ボタン要素を取得
 var button = document.getElementById("generateButton");
 // ユーザーリスト要素を取得
 var userList = document.getElementById("userList");
 // ボタンクリック時の処理
 button.addEventListener("click", function () {
+    console.clear(); // コンソールの内容を非表示にする
+    // ユーザー情報の配列を生成（最大人数がユーザー数と同じ）
+    var minUsers = 400; // 最低でも400人
+    var numUsers = Math.floor(Math.random() * (999 - minUsers)) + minUsers;
+    var users = [];
+    for (var i = 1; i <= numUsers; i++) {
+        users.push("\u30E6\u30FC\u30B6\u30FC".concat(i));
+    }
+    // チーム数計算
+    var maxUsersPerTeam = 10; // 1チームあたりの人数を10人に固定
+    var numTeams = Math.ceil(numUsers / maxUsersPerTeam);
+    console.log('全社員数：' + numUsers);
+    console.log('チーム数：' + numTeams);
+    console.log('1チームの最大人数：' + maxUsersPerTeam);
+    // 一個前と前々回に表示したユーザーリストを保持する変数
+    var prevUsers = [];
+    var prevPrevUsers = [];
     // ユーザー名をシャッフル
     var shuffledUsers = shuffleArray(users);
     // チームごとにユーザーリストを生成
