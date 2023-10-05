@@ -1,28 +1,15 @@
 // ユーザー情報の配列
-var users = [
-    "ユーザー1",
-    "ユーザー2",
-    "ユーザー3",
-    "ユーザー4",
-    "ユーザー5",
-    "ユーザー6",
-    "ユーザー7",
-    "ユーザー8",
-    "ユーザー9",
-    "ユーザー10",
-    "ユーザー11",
-    "ユーザー12",
-    "ユーザー13",
-    "ユーザー14",
-    "ユーザー15",
-    "ユーザー16",
-    "ユーザー17",
-    "ユーザー18",
-    "ユーザー19",
-    "ユーザー20",
-];
-// 一個前に表示した配列のインデックスを保持する変数
-var prevIndex = -1;
+var users = [];
+// ユーザー情報を生成して配列に追加
+for (var i = 1; i <= 400; i++) {
+    var userName = "\u30E6\u30FC\u30B6\u30FC".concat(i);
+    users.push(userName);
+}
+// 一度に表示するユーザー数（10人固定）
+var usersPerDisplay = 10;
+// 一個前と前々回に表示したユーザーリストを保持する変数
+var prevUsers = []; //一個前に表示したパターンを格納する配列
+var prevPrevUsers = []; //二個前に表示したパターンを格納する配列
 // ボタン要素を取得
 var button = document.getElementById("generateButton");
 // ユーザーリスト要素を取得
@@ -31,12 +18,23 @@ var userList = document.getElementById("userList");
 button.addEventListener("click", function () {
     // ユーザー名をシャッフル
     var shuffledUsers = shuffleArray(users);
-    // 前回と異なるパターンの10人を取得
+    // 前回と前々回と異なるパターンのユーザーを取得
     var startIndex = getRandomIndex(users.length);
     var selectedUsers = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < usersPerDisplay; i++) {
         var index = (startIndex + i) % users.length;
-        selectedUsers.push(shuffledUsers[index]);
+        var userName = shuffledUsers[index];
+        if (!prevUsers.includes(userName) && !prevPrevUsers.includes(userName)) {
+            selectedUsers.push(userName);
+        }
+    }
+    //セレクトされたユーザー数が10人かチェック → もし10人未満・以上である場合は、処理を終わる（何も出力しない）
+    if (selectedUsers.length != usersPerDisplay) {
+        // selectedUsers.lengthが10になるようにデータを追加
+        while (selectedUsers.length < usersPerDisplay) {
+            var remainingUsers = shuffledUsers.filter(function (userName) { return !selectedUsers.includes(userName); });
+            selectedUsers.push(remainingUsers[0]);
+        }
     }
     // ユーザーリストをクリア
     userList.innerHTML = "";
@@ -46,14 +44,9 @@ button.addEventListener("click", function () {
         listItem.textContent = userName;
         userList.appendChild(listItem);
     });
-    // 今回の表示が一個前と同じパターンかどうかをチェック
-    var currentIndex = shuffledUsers.indexOf(selectedUsers[0]);
-    if (currentIndex !== prevIndex) {
-        prevIndex = currentIndex;
-    }
-    else {
-        return 0;
-    }
+    // 前回と前々回に表示したユーザーリストを更新
+    prevPrevUsers = prevUsers;
+    prevUsers = selectedUsers;
 });
 // 配列をシャッフルする関数
 function shuffleArray(array) {
