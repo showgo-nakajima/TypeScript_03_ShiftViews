@@ -1,4 +1,3 @@
-// 03_ShitView.ts
 var button = document.getElementById("generateButton");
 var userList = document.getElementById("userList");
 // ローカルストレージから結果を読み込む関数
@@ -60,9 +59,6 @@ button.addEventListener("click", function () {
     while (uniqueTeams.length === 0 && shuffleCount < MaxAttempts) {
         _loop_1();
     }
-    // if (uniqueTeams.length === 0) {
-    //     console.log(`${MaxAttempts}回の再試行で重複しない組み合わせが見つかりませんでした.`);
-    // }
     // 以前のチームが被らないように表示
     userList.innerHTML = "";
     uniqueTeams.forEach(function (team, index) {

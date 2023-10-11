@@ -1,4 +1,3 @@
-// 03_ShitView.ts
 const button = document.getElementById("generateButton") as HTMLButtonElement;
 const userList = document.getElementById("userList") as HTMLUListElement;
 
@@ -72,10 +71,6 @@ button.addEventListener("click", () => {
           saveResults(savedResults); // 保存された結果を更新
       }
   }
-
-  // if (uniqueTeams.length === 0) {
-  //     console.log(`${MaxAttempts}回の再試行で重複しない組み合わせが見つかりませんでした.`);
-  // }
 
   // 以前のチームが被らないように表示
   userList.innerHTML = "";
